@@ -54,6 +54,11 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'mongodb' => [
+            'driver' => 'mongodb',
+            'dsn' => env('MONGO_DSN'),
+            'database' => env('MONGO_DB', 'lumina'),
+        ],
     ],
 
     /*

@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ "$(docker ps -q -f name=lumina-php-1)" ]; then
+    docker exec -it lumina-php-1 composer "$@"
+else
+    echo "Container not running"
+fi
