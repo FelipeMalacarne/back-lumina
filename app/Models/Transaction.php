@@ -19,12 +19,12 @@ class Transaction extends Model
         'memo',
         'currency',
         'account_id',
-        'created_at',
     ];
 
     protected $dates = [
         'created_at',
-        'date_posted'
+        'updated_at',
+        'date_posted',
     ];
 
     protected function casts(): array
@@ -32,6 +32,7 @@ class Transaction extends Model
         return [
             'date_posted' => 'immutable_datetime',
             'created_at' => 'immutable_datetime',
+            'updated_at' => 'immutable_datetime',
         ];
     }
 }
