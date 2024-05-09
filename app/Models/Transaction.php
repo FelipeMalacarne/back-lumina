@@ -21,4 +21,17 @@ class Transaction extends Model
         'account_id',
         'created_at',
     ];
+
+    protected $dates = [
+        'created_at',
+        'date_posted'
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'date_posted' => 'immutable_datetime',
+            'created_at' => 'immutable_datetime',
+        ];
+    }
 }
