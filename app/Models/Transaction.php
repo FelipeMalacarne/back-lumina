@@ -35,4 +35,19 @@ class Transaction extends Model
             'updated_at' => 'immutable_datetime',
         ];
     }
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class);
+    }
+
+    public function getDecimalAmountAttribute(): string
+    {
+        return $this->amount / 100;
+    }
+
+    public function getFormattedAmountAttribute(): string
+    {
+        return number_format($this->decimal_amount, 2);
+    }
 }
