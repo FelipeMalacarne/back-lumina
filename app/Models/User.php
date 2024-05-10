@@ -58,10 +58,14 @@ class User extends Authenticatable
 
     public function createPersonalProject(): Project
     {
-        return Project::create([
+        $project = Project::create([
             'name' => $this->name,
             'type' => ProjectType::Personal,
-        ])->users()->attach($this, ['role' => Role::Owner]);
+        ]);
+
+        $this->projects()->attach($project, ['role' => Role::Owner]);
+
+        return $project;
     }
 
     public function projects()
