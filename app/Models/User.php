@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Enums\ProjectType;
+use App\Enums\Role;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -44,6 +46,34 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'created_at' => 'immutable_datetime',
+            'updated_at' => 'immutable_datetime',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::created(fn (User $user) => $user->createPersonalProject());
+    }
+
+    public function createPersonalProject(): Project
+    {
+        return Project::create([
+            'name' => $this->name,
+            'type' => ProjectType::Personal,
+        ])->users()->attach($this, ['role' => Role::Owner]);
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class)
+            ->withPivot('role')
+            ->withTimestamps()
+            ->as('membership');
+    }
+
+    public function personalProject(): Project
+    {
+        return $this->projects()->where('type', ProjectType::Personal)->first();
     }
 }
