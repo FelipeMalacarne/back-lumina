@@ -25,7 +25,7 @@ class Project extends Model
 
     public function accounts()
     {
-        return $this->belongsToMany(Account::class);
+        return $this->belongsToMany(Account::class)->withTimestamps();
     }
 
     public function transactions()

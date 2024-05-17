@@ -20,16 +20,16 @@ return new class extends Migration
 
         Schema::create('project_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('project_id')->constrained()->cascadeOnDelete();
-            $table->foreignUuid('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignUuid('project_id')->index()->constrained()->cascadeOnDelete();
+            $table->foreignUuid('user_id')->index()->constrained()->cascadeOnDelete();
             $table->string('role', 20)->default('member');
             $table->timestamps();
         });
 
         Schema::create('account_project', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('account_id')->constrained()->cascadeOnDelete();
-            $table->foreignUuid('project_id')->constrained()->cascadeOnDelete();
+            $table->foreignUuid('account_id')->index()->constrained()->cascadeOnDelete();
+            $table->foreignUuid('project_id')->index()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
