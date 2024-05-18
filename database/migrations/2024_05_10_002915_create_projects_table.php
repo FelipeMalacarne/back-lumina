@@ -32,6 +32,10 @@ return new class extends Migration
             $table->foreignUuid('project_id')->index()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignUuid('default_project_id')->nullable()->index()->constrained('projects')->nullOnDelete();
+        });
     }
 
     /**

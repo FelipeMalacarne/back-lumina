@@ -24,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'default_project_id',
     ];
 
     /**
@@ -56,6 +57,24 @@ class User extends Authenticatable
         static::created(fn (User $user) => $user->createPersonalProject());
     }
 
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class)
+            ->withPivot('role')
+            ->withTimestamps()
+            ->as('membership');
+    }
+
+    public function defaultProject()
+    {
+        return $this->belongsTo(Project::class);
+    }
+
+    public function personalProject(): Project
+    {
+        return $this->projects()->where('type', ProjectType::Personal)->first();
+    }
+
     public function createPersonalProject(): Project
     {
         $project = Project::create([
@@ -65,19 +84,8 @@ class User extends Authenticatable
 
         $this->projects()->attach($project, ['role' => Role::Owner]);
 
+        $this->defaultProject()->associate($project)->save();
+
         return $project;
-    }
-
-    public function projects()
-    {
-        return $this->belongsToMany(Project::class)
-            ->withPivot('role')
-            ->withTimestamps()
-            ->as('membership');
-    }
-
-    public function personalProject(): Project
-    {
-        return $this->projects()->where('type', ProjectType::Personal)->first();
     }
 }
