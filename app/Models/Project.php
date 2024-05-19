@@ -37,7 +37,6 @@ class Project extends Model
     {
         return $this->belongsToMany(User::class)
             ->withPivot('role')
-            ->withTimestamps()
-            ->as('membership');
+            ->withTimestamps();
     }
 }
