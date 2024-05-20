@@ -20,9 +20,6 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'email_verified_at' => $this->email_verified_at,
             'default_project_id' => $this->default_project_id,
-            'projects' => ProjectResource::collection($this->whenLoaded('projects')),
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ];
     }
 }

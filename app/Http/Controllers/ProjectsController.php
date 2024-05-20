@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProjectResource;
 use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
 {
-    public function userProjects(Request $request)
+    public function index(Request $request)
     {
-        return response()->json($request->user()->projects);
+        return response()->json(ProjectResource::collection($request->user()->projects));
     }
 }

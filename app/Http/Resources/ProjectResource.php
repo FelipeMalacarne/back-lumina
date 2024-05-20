@@ -19,8 +19,6 @@ class ProjectResource extends JsonResource
             'name' => $this->name,
             'type' => $this->type,
             'role' => $this->whenPivotLoaded('project_user', fn () => $this->pivot->role),
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ];
     }
 }
