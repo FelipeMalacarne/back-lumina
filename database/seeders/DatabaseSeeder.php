@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
 
-        Account::factory()->withTransactions(5)->create([
+        Account::factory(5)->withTransactions(5)->create([
             'project_id' => $user->personalProject()->id,
         ]);;
     }

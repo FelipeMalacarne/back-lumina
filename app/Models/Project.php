@@ -26,7 +26,7 @@ class Project extends Model
         ];
     }
 
-    public function accounts()
+    public function accounts(): HasMany
     {
         return $this->hasMany(Account::class);
     }
