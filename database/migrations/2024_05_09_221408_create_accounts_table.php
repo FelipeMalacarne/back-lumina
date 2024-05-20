@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('number', 20)->nullable();
             $table->string('check_digit', 1)->nullable();
             $table->integer('balance')->default(0);
-            $table->foreignId('bank_id')->constrained();
+            $table->foreignId('bank_id')->index()->constrained();
             $table->timestamps();
         });
     }

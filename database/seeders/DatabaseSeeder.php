@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            UserSeeder::class,
             BankSeeder::class,
             AccountSeeder::class,
         ]);
@@ -26,8 +27,8 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
 
-        $account = Account::factory()->withTransactions(5)->create();
-
-        $user->personalProject()->accounts()->attach($account);
+        Account::factory()->withTransactions(5)->create([
+            'project_id' => $user->personalProject()->id,
+        ]);;
     }
 }

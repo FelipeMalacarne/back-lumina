@@ -26,15 +26,12 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('account_project', function (Blueprint $table) {
-            $table->id();
-            $table->foreignUuid('account_id')->index()->constrained()->cascadeOnDelete();
-            $table->foreignUuid('project_id')->index()->constrained()->cascadeOnDelete();
-            $table->timestamps();
-        });
-
         Schema::table('users', function (Blueprint $table) {
             $table->foreignUuid('default_project_id')->nullable()->index()->constrained('projects')->nullOnDelete();
+        });
+
+        Schema::table('accounts', function (Blueprint $table) {
+            $table->foreignUuid('project_id')->index()->constrained();
         });
     }
 
