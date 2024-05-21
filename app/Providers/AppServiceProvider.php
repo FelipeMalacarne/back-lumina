@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Services\OfxParser;
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
@@ -14,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        App::bind('ofxParser', OfxParser::class);
     }
 
     /**
