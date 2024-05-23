@@ -24,7 +24,7 @@ class OfxParser
             $transactions[] = [
                 'type' => (string) $transaction->TRNTYPE,
                 'date_posted' => $this->formatDate((string) $transaction->DTPOSTED),
-                'amount' => (string) $transaction->TRNAMT,
+                'amount' => (int) ($transaction->TRNAMT * 100),
                 'fitid' => (string) $transaction->FITID,
                 'memo' => (string) $transaction->MEMO,
             ];
@@ -58,6 +58,11 @@ class OfxParser
             'balance' => $this->balance(),
             'account' => $this->account(),
         ];
+    }
+
+    public function currency(): string
+    {
+        return (string) $this->xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->CURDEF;
     }
 
     private function formatDate(string $dateString): string
