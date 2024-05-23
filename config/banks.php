@@ -1,7 +1,7 @@
 <?php
 
 return [
-    ['code' => '001', 'name' => 'banco do brasil s.a.'],
+    ['code' => '001', 'name' => 'Banco do Brasil s.a.'],
     ['code' => '003', 'name' => 'Banco da Amazônia S.A.'],
     ['code' => '004', 'name' => 'Banco do Nordeste do Brasil S.A.'],
     ['code' => '007', 'name' => 'Banco Nacional de Desenvolvimento Econômico e Social – BNDES'],

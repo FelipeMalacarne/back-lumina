@@ -57,9 +57,4 @@ class Account extends Model
         return Collection::make(Config::get('banks'))
             ->firstWhere('code', $this->bank_id)['name'];
     }
-
-    public function getColorAttribute(): AccountColor
-    {
-        return new AccountColor($this->color);
-    }
 }

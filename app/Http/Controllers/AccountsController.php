@@ -9,6 +9,7 @@ class AccountsController extends Controller
 {
     public function index(Request $request)
     {
-        return response()->json(AccountResource::make($request->user()->defaultProject->accounts));
+        logger($request->user()->defaultProject->accounts);
+        return response()->json(AccountResource::collection($request->user()->defaultProject->accounts));
     }
 }
