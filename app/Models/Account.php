@@ -20,6 +20,8 @@ class Account extends Model
         'check_digit',
         'balance',
         'bank_id',
+        'description',
+        'color',
     ];
 
     public function project(): BelongsTo
