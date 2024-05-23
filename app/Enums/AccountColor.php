@@ -9,4 +9,9 @@ enum AccountColor: string
     case Yellow = 'yellow';
     case Green = 'green';
     case Emerald = 'emerald';
+
+    public static function values(): array
+    {
+        return array_values(self::cases());
+    }
 }

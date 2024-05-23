@@ -12,7 +12,7 @@ class BankSeeder extends Seeder
     {
         Bank::insert(collect(config('banks'))->map(fn ($bank) => [
             'name' => $bank['name'],
-            'code' => $bank['code'],
+            'id' => $bank['code'],
             'updated_at' => now(),
             'created_at' => now(),
         ])->toArray());

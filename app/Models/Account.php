@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Enums\AccountColor;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Config;
 use MongoDB\Laravel\Eloquent\HybridRelations;
 
 class Account extends Model
@@ -47,5 +50,16 @@ class Account extends Model
     public function getFormattedBalanceAttribute(): string
     {
         return number_format($this->decimal_balance, 2);
+    }
+
+    public function getBankNameAttribute(): string
+    {
+        return Collection::make(Config::get('banks'))
+            ->firstWhere('code', $this->bank_id)['name'];
+    }
+
+    public function getColorAttribute(): AccountColor
+    {
+        return new AccountColor($this->color);
     }
 }

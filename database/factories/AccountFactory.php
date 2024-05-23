@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\AccountColor;
 use App\Models\Account;
 use App\Models\Bank;
 use App\Models\Project;
@@ -28,6 +29,8 @@ class AccountFactory extends Factory
             'balance' => $this->faker->randomNumber(8),
             'bank_id' => Bank::inRandomOrder()->first()->id,
             'project_id' => Project::inRandomOrder()->first()->id,
+            'color' => $this->faker->randomElement(AccountColor::values()),
+            'description' => $this->faker->sentence,
         ];
     }
 
