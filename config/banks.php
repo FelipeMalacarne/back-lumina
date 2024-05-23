@@ -133,7 +133,7 @@ return [
     ['code' => '272', 'name' => 'AGK CORRETORA DE CAMBIO S.A.'],
     ['code' => '273', 'name' => 'Cooperativa de Crédito Rural de São Miguel do Oeste – Sulcredi/São Miguel'],
     ['code' => '274', 'name' => 'MONEY PLUS SOCIEDADE DE CRÉDITO AO MICROEMPREENDEDOR E A EMPRESA DE PEQUENO PORT'],
-    ['code' => '276', 'name' => 'Senff S.A. – Crédito, Financiamento e Investimento'],
+    ['code' => '276', 'name' => 'Senff S.A  – Crédito, Financiamento e Investimento'],
     ['code' => '278', 'name' => 'Genial Investimentos Corretora de Valores Mobiliários S.A.'],
     ['code' => '279', 'name' => 'COOPERATIVA DE CREDITO RURAL DE PRIMAVERA DO LESTE'],
     ['code' => '280', 'name' => 'Avista S.A. Crédito, Financiamento e Investimento'],
