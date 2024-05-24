@@ -2,15 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Bank extends Model
 {
     protected $fillable = [
         'name',
-        'code',
+        'id',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'id' => 'string',
+        ];
+    }
 
     public function accounts()
     {

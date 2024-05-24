@@ -20,7 +20,9 @@ return new class extends Migration
             $table->integer('balance')->default(0);
             $table->string('description', 255)->nullable();
             $table->string('color', 20)->nullable();
-            $table->foreignId('bank_id')->index()->constrained();
+            $table->string('bank_id', 3);
+
+            $table->foreign('bank_id')->references('id')->on('banks')->onDelete('cascade');
             $table->timestamps();
         });
     }
