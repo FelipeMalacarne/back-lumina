@@ -3,8 +3,6 @@ name: Test
 jobs:
   phpunit:
     runs-on: ubuntu-latest
-    container:
-      image: felipemalacarne/lumina-php:1.0
 
     services:
       postgres:
@@ -18,18 +16,24 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-    - uses: actions/checkout@v1
-      with:
-        fetch-depth: 1
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          extensions: json, dom, curl, libxml, mbstring, mongodb
+          coverage: none
 
-    - name: Install composer dependencies
-      run: |
-        composer install --no-scripts
+      - name: Install composer dependencies
+        run: |
+          composer install --no-scripts
 
-    - name: Prepare Laravel Application
-      run: |
-        cp .env.test .env
-        php artisan key:generate
+      - name: Prepare Laravel Application
+        run: |
+          cp .env.test .env
+          php artisan key:generate
 
-    - name: Run Testsuite
-      run: vendor/bin/phpunit tests/
+      - name: Run Testsuite
+        run: vendor/bin/phpunit tests/
