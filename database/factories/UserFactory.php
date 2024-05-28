@@ -45,6 +45,7 @@ class UserFactory extends Factory
     public function password(string $password): static
     {
         static::$password = Hash::make($password);
+
         return $this;
     }
 }

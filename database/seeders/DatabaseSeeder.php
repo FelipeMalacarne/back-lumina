@@ -29,6 +29,6 @@ class DatabaseSeeder extends Seeder
 
         Account::factory(5)->withTransactions(5)->create([
             'project_id' => $user->personalProject()->id,
-        ]);;
+        ]);
     }
 }
