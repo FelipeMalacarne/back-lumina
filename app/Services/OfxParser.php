@@ -29,21 +29,24 @@ class OfxParser
                 'memo' => (string) $transaction->MEMO,
             ];
         }
+
         return $transactions;
     }
 
     public function balance(): array
     {
         $balance = $this->xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->LEDGERBAL;
+
         return [
             'balance' => (string) $balance->BALAMT,
-            'date' => Carbon::parse((string) $balance->DTASOF)
+            'date' => Carbon::parse((string) $balance->DTASOF),
         ];
     }
 
     public function account(): array
     {
         $account = $this->xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->BANKACCTFROM;
+
         return [
             'bank_id' => (string) $account->BANKID,
             'account_id' => (string) $account->ACCTID,
