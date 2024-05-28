@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Carbon;
+use InvalidArgumentException;
 use SimpleXMLElement;
 
 class OfxParser
@@ -24,7 +25,7 @@ class OfxParser
             $transactions[] = [
                 'type' => (string) $transaction->TRNTYPE,
                 'date_posted' => $this->formatDate((string) $transaction->DTPOSTED),
-                'amount' => (int) ($transaction->TRNAMT * 100),
+                'amount' => (int) (round((float) $transaction->TRNAMT, 2) * 100),
                 'fitid' => (string) $transaction->FITID,
                 'memo' => (string) $transaction->MEMO,
             ];
@@ -38,8 +39,8 @@ class OfxParser
         $balance = $this->xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->LEDGERBAL;
 
         return [
-            'balance' => (string) $balance->BALAMT,
-            'date' => Carbon::parse((string) $balance->DTASOF),
+            'balance' => (int) (round((float) $balance->BALAMT, 2) * 100),
+            'date' => $this->formatDate($balance->DTASOF),
         ];
     }
 
@@ -70,10 +71,14 @@ class OfxParser
 
     private function formatDate(string $dateString): string
     {
-        preg_match('/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})\[(-?\d+):\w+\]/', $dateString, $matches);
-        $dateTime = new \DateTime(sprintf('%s-%s-%s %s:%s:%s', $matches[1], $matches[2], $matches[3], $matches[4], $matches[5], $matches[6]));
-        $dateTime->setTimezone(new \DateTimeZone(sprintf('Etc/GMT%+d', $matches[7])));
+        try {
+            return Carbon::parse($dateString)->format('Y-m-d H:i:s');
+        } catch (InvalidArgumentException $e) {
+            preg_match('/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})\[(-?\d+):\w+\]/', $dateString, $matches);
+            $dateTime = new \DateTime(sprintf('%s-%s-%s %s:%s:%s', $matches[1], $matches[2], $matches[3], $matches[4], $matches[5], $matches[6]));
+            $dateTime->setTimezone(new \DateTimeZone(sprintf('Etc/GMT%+d', $matches[7])));
 
-        return Carbon::parse($dateTime->format(\DateTime::ISO8601_EXPANDED));
+            return Carbon::parse($dateTime->format(\DateTime::ISO8601_EXPANDED));
+        }
     }
 }
