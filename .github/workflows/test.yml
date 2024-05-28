@@ -4,15 +4,15 @@ jobs:
   phpunit:
     runs-on: ubuntu-latest
     container:
-      image: kirschbaumdevelopment/laravel-test-runner:8.3
+      image: felipemalacarne/lumina-php:1.0
 
     services:
       postgres:
         image: postgres:10.8
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: test
+          POSTGRES_USER: testing
+          POSTGRES_PASSWORD: testing
+          POSTGRES_DB: lumina
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
@@ -24,8 +24,6 @@ jobs:
 
     - name: Install composer dependencies
       run: |
-        apt-get update
-        apt-get install -y php8.3-mongodb
         composer install --no-scripts
 
     - name: Prepare Laravel Application
