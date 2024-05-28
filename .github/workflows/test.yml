@@ -15,6 +15,15 @@ jobs:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
+      mongodb:
+        image: mongo:latest
+        ports:
+          - "27017:27017"
+        env:
+          MONGO_INITDB_DATABASE: lumina
+          MONGO_INITDB_ROOT_USERNAME: testing
+          MONGO_INITDB_ROOT_PASSWORD: password
+
     steps:
       - uses: actions/checkout@v1
         with:
