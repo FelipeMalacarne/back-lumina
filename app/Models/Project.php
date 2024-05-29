@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Support\Collection;
 
 class Project extends Model
 {
@@ -31,9 +31,14 @@ class Project extends Model
         return $this->hasMany(Account::class);
     }
 
-    public function transactions(): HasManyThrough
+    /**
+     * Get all transactions for all accounts in the project.
+     *
+     * @return Collection<Transaction>
+     */
+    public function transactions(): Collection
     {
-        return $this->hasManyThrough(Transaction::class, Account::class);
+        return $this->accounts()->with('transactions')->get()->flatMap->transactions;
     }
 
     public function users(): BelongsToMany
