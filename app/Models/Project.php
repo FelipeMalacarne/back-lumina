@@ -36,7 +36,7 @@ class Project extends Model
      *
      * @return Collection<Transaction>
      */
-    public function transactions(): Collection
+    public function transactions()
     {
         return $this->accounts()->with('transactions')->get()->flatMap->transactions;
     }

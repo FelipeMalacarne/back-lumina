@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Number;
+use MongoDB\Laravel\Eloquent\HybridRelations;
 use MongoDB\Laravel\Eloquent\Model;
 
 class Transaction extends Model
@@ -38,16 +41,16 @@ class Transaction extends Model
 
     public function account()
     {
-        return $this->belongsTo(Account::class);
+        return $this->belongsTo(Account::class, 'account_id');
     }
 
-    public function getDecimalAmountAttribute(): string
+    public function getDecimalAmountAttribute(): float
     {
         return $this->amount / 100;
     }
 
     public function getFormattedAmountAttribute(): string
     {
-        return number_format($this->decimal_amount, 2);
+        return Number::currency($this->decimal_amount, in: $this->currency);
     }
 }

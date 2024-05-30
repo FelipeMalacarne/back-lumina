@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bank extends Model
 {
+    protected $connection = 'pgsql';
+
     protected $fillable = [
         'name',
         'id',
