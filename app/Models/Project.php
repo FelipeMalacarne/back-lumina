@@ -13,6 +13,8 @@ class Project extends Model
 {
     use HasFactory, HasUuids;
 
+    protected $connection = 'pgsql';
+
     protected $fillable = [
         'name',
         'type',
@@ -34,11 +36,10 @@ class Project extends Model
     /**
      * Get all transactions for all accounts in the project.
      *
-     * @return Collection<Transaction>
      */
     public function transactions()
     {
-        return $this->accounts()->with('transactions')->get()->flatMap->transactions;
+        return Transaction::whereIn('account_id', $this->accounts()->pluck('id'));
     }
 
     public function users(): BelongsToMany
