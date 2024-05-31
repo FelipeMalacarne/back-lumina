@@ -4,9 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Number;
-use MongoDB\Laravel\Eloquent\HybridRelations;
 use MongoDB\Laravel\Eloquent\Model;
 
 class Transaction extends Model
