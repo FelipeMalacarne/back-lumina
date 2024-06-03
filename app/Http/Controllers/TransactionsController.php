@@ -10,7 +10,14 @@ class TransactionsController extends Controller
 {
     public function index(Request $request)
     {
-        $transactions = $request->user()->defaultProject->transactions()->paginate();
+        $transactions = $request->user()->defaultProject->transactions()
+            ->when($request->query('type') === 'credit', function ($query) {
+                $query->where('amount', '>', 0);
+            })
+            ->when($request->query('type') === 'debit', function ($query) {
+                $query->where('amount', '<', 0);
+            })
+            ->paginate();
 
         return TransactionResource::collection($transactions);
     }
