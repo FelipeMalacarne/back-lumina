@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name', 50);
             $table->string('type', 20)->nullable();
-            $table->string('number', 8)->nullable();
+            $table->string('number', 16)->nullable();
             $table->string('check_digit', 1)->nullable();
             $table->integer('balance')->default(0);
             $table->string('description', 255)->nullable();
