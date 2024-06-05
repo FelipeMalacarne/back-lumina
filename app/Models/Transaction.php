@@ -5,13 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Number;
-use MongoDB\Laravel\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
     use HasFactory, HasUuids;
-
-    protected $connection = 'mongodb';
 
     protected $fillable = [
         'amount',
@@ -39,7 +37,7 @@ class Transaction extends Model
 
     public function account()
     {
-        return $this->belongsTo(Account::class, 'account_id');
+        return $this->belongsTo(Account::class);
     }
 
     public function getDecimalAmountAttribute(): float
