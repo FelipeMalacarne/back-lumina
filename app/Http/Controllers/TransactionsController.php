@@ -17,6 +17,7 @@ class TransactionsController extends Controller
             ->when($request->query('type') === 'debit', function ($query) {
                 $query->where('amount', '<', 0);
             })
+            ->orderBy('date_posted', 'desc')
             ->paginate();
 
         return TransactionResource::collection($transactions);
