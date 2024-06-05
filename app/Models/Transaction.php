@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Number;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Number;
 
 class Transaction extends Model
 {
