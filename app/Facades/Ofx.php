@@ -7,9 +7,13 @@ namespace App\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static
+ * @method static self load(string $ofxContent)
+ * @method static array transactions()
+ * @method static array account()
+ * @method static array balance()
+ * @method static array statement()
  *
- * @see \App\Service\Ofx
+ * @see \App\Services\OfxParser
  */
 class Ofx extends Facade
 {

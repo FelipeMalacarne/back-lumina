@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use MongoDB\Laravel\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Project extends Model
 {
@@ -36,9 +36,9 @@ class Project extends Model
     /**
      * Get all transactions for all accounts in the project.
      */
-    public function transactions(): Builder
+    public function transactions(): HasManyThrough
     {
-        return Transaction::whereIn('account_id', $this->accounts()->pluck('id'));
+        return $this->hasManyThrough(Transaction::class, Account::class);
     }
 
     public function users(): BelongsToMany

@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('fitid')->nullable();
             $table->integer('amount');
             $table->string('memo')->nullable();
-            $table->string('currency', 3);
+            $table->string('currency', 3)->default('BRL');
             $table->string('account_number', 8)->nullable();
-            $table->timestamp('date_posted');
+            $table->timestamp('date_posted')->default(now());
             $table->foreignUuid('account_id')->constrained()->onDelete('cascade');
 
             $table->timestamps();
