@@ -23,7 +23,7 @@ class ImportController extends Controller
 
         $existingAccount = $user->defaultProject->accounts()->where('number', $account['number'])->first();
 
-        if(!$existingAccount) {
+        if (!$existingAccount) {
             $account = $user->defaultProject->accounts()->create($account);
         } else {
             $account = $existingAccount;
@@ -31,11 +31,17 @@ class ImportController extends Controller
 
         $transactions = $ofx->transactions();
 
-        $account->transactions()->createMany($transactions);
+        $newTransactions = collect($transactions)->filter(function ($transactionData) use ($account) {
+            return !$account->transactions()->where([
+                'fitid' => $transactionData['fitid'],
+                'date_posted' => $transactionData['date_posted'],
+                'amount' => $transactionData['amount'],
+            ])->exists();
+        })->toArray();
 
+        $account->transactions()->createMany($newTransactions);
 
         return response()->json(null, Response::HTTP_CREATED);
-
     }
 
     public function importCsv(Request $request)
