@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Resources\UserResource;
@@ -24,8 +25,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         Route::get('/{id}/accounts', [ProjectsController::class, 'accounts']);
     });
 
-    Route::group(['prefix' => 'transaction'], function () {
-        Route::post('/ofx', [ProjectsController::class, 'importOfx']);
-        Route::post('/csv', [ProjectsController::class, 'importCsv']);
+    Route::group(['prefix' => 'transaction/import'], function () {
+        Route::post('/ofx', [ImportController::class, 'importOfx']);
+        Route::post('/csv', [ImportController::class, 'importCsv']);
     });
 });
