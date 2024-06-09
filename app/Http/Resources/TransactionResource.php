@@ -21,6 +21,7 @@ class TransactionResource extends JsonResource
             'memo' => $this->memo,
             'account_id' => $this->account_id,
             'created_at' => $this->created_at->toDateTimeString(),
+            'updated_at' => $this->updated_at->toDateTimeString(),
         ];
     }
 }
