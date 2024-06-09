@@ -39,9 +39,9 @@ class ImportController extends Controller
             ])->exists();
         })->toArray();
 
-        $account->transactions()->createMany($newTransactions);
+        $count = $account->transactions()->createMany($newTransactions)->count();
 
-        return response()->json(null, Response::HTTP_CREATED);
+        return response()->json(['count' => $count ], Response::HTTP_CREATED);
     }
 
     public function importCsv(Request $request)

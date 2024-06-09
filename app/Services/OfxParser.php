@@ -50,9 +50,13 @@ class OfxParser
         $accid = explode('-', (string) $account->ACCTID);
 
         $bank_id = (string) $account->BANKID;
-        // if the field has 4 digits remove the  first 0
-        if (strlen($bank_id > 3)) {
+        // Remove leading zero, sometimes
+        if (strlen($bank_id) > 3) {
             $bank_id = substr($bank_id, 1);
+        }
+
+        if (strlen($bank_id) < 3) {
+            $bank_id = str_pad($bank_id, 3, '0', STR_PAD_LEFT);
         }
 
         return [
