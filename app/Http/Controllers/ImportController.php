@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Facades\Ofx;
-use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -23,7 +22,7 @@ class ImportController extends Controller
 
         $existingAccount = $user->defaultProject->accounts()->where('number', $account['number'])->first();
 
-        if(!$existingAccount) {
+        if (! $existingAccount) {
             $account = $user->defaultProject->accounts()->create($account);
         } else {
             $account = $existingAccount;
@@ -32,7 +31,6 @@ class ImportController extends Controller
         $transactions = $ofx->transactions();
 
         $account->transactions()->createMany($transactions);
-
 
         return response()->json(null, Response::HTTP_CREATED);
 
