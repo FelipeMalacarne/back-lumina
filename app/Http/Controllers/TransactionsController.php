@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Transaction\ManualTransactionCreate;
 use App\Http\Resources\TransactionResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -23,9 +24,9 @@ class TransactionsController extends Controller
         return TransactionResource::collection($transactions);
     }
 
-    public function store(Request $request)
+    public function store(ManualTransactionCreate $request)
     {
-        $transaction = $request->user()->transactions()->create($request->all());
+        $transaction = $request->user()->defaultProject->transactions()->create($request->all());
 
         return response()->json($transaction, Response::HTTP_CREATED);
     }
