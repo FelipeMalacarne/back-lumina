@@ -19,6 +19,7 @@ class AccountsController extends Controller
     public function show(Request $request, $id)
     {
         $account = $request->user()->defaultProject->accounts()->findOrFail($id);
+
         return response()->json(AccountResource::make($account), Response::HTTP_OK);
     }
 

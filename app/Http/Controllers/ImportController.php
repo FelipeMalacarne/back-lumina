@@ -31,7 +31,7 @@ class ImportController extends Controller
         $transactions = $ofx->transactions();
 
         $newTransactions = collect($transactions)->filter(function ($transactionData) use ($account) {
-            return !$account->transactions()->where([
+            return ! $account->transactions()->where([
                 'fitid' => $transactionData['fitid'],
                 'date_posted' => $transactionData['date_posted'],
                 'amount' => $transactionData['amount'],
@@ -40,7 +40,7 @@ class ImportController extends Controller
 
         $count = $account->transactions()->createMany($newTransactions)->count();
 
-        return response()->json(['count' => $count ], Response::HTTP_CREATED);
+        return response()->json(['count' => $count], Response::HTTP_CREATED);
     }
 
     public function importCsv(Request $request)
