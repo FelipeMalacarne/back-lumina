@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Number;
 
 class Transaction extends Model
 {
@@ -39,13 +40,13 @@ class Transaction extends Model
         return $this->belongsTo(Account::class);
     }
 
-    public function getDecimalAmountAttribute(): string
+    public function getDecimalAmountAttribute(): float
     {
         return $this->amount / 100;
     }
 
     public function getFormattedAmountAttribute(): string
     {
-        return number_format($this->decimal_amount, 2);
+        return Number::currency($this->decimal_amount, in: $this->currency);
     }
 }

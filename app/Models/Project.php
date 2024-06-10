@@ -13,6 +13,8 @@ class Project extends Model
 {
     use HasFactory, HasUuids;
 
+    protected $connection = 'pgsql';
+
     protected $fillable = [
         'name',
         'type',
@@ -31,6 +33,9 @@ class Project extends Model
         return $this->hasMany(Account::class);
     }
 
+    /**
+     * Get all transactions for all accounts in the project.
+     */
     public function transactions(): HasManyThrough
     {
         return $this->hasManyThrough(Transaction::class, Account::class);

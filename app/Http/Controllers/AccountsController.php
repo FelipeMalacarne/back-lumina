@@ -16,6 +16,13 @@ class AccountsController extends Controller
         return response()->json(AccountResource::collection($accounts), Response::HTTP_OK);
     }
 
+    public function show(Request $request, $id)
+    {
+        $account = $request->user()->defaultProject->accounts()->findOrFail($id);
+
+        return response()->json(AccountResource::make($account), Response::HTTP_OK);
+    }
+
     public function store(CreateAccount $request)
     {
         $account = $request->user()->defaultProject->accounts()->create($request->all());

@@ -47,10 +47,24 @@ class OfxParser
     {
         $account = $this->xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->BANKACCTFROM;
 
+        $accid = explode('-', (string) $account->ACCTID);
+
+        $bank_id = (string) $account->BANKID;
+        // Remove leading zero, sometimes
+        if (strlen($bank_id) > 3) {
+            $bank_id = substr($bank_id, 1);
+        }
+
+        if (strlen($bank_id) < 3) {
+            $bank_id = str_pad($bank_id, 3, '0', STR_PAD_LEFT);
+        }
+
         return [
-            'bank_id' => (string) $account->BANKID,
-            'account_id' => (string) $account->ACCTID,
-            'account_type' => (string) $account->ACCTTYPE,
+            'name' => (string) $this->xml->SIGNONMSGSRSV1?->SONRS?->FI?->ORG,
+            'bank_id' => $bank_id,
+            'check_digit' => $accid[1] ?? null,
+            'number' => $accid[0],
+            'type' => (string) $account->ACCTTYPE,
         ];
     }
 

@@ -14,6 +14,8 @@ class Account extends Model
 {
     use HasFactory, HasUuids;
 
+    protected $connection = 'pgsql';
+
     protected $fillable = [
         'name',
         'type',
