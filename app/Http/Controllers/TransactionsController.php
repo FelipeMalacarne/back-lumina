@@ -46,7 +46,7 @@ class TransactionsController extends Controller
 
     public function destroy(Request $request, string $transaction)
     {
-        $transaction = $request->user()->transactions()->findOrFail($transaction);
+        $transaction = $request->user()->defaultProject->transactions()->findOrFail($transaction);
         $transaction->delete();
 
         return response()->json(null, Response::HTTP_NO_CONTENT);
