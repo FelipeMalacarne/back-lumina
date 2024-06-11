@@ -35,6 +35,7 @@ class AccountsController extends Controller
     {
         $account = $request->user()->defaultProject->accounts()->findOrFail($id);
         $account->update($request->all());
+
         return response()->json(AccountResource::make($account), Response::HTTP_OK);
     }
 
@@ -42,6 +43,7 @@ class AccountsController extends Controller
     {
         $account = $request->user()->defaultProject->accounts()->findOrFail($id);
         $account->delete();
+
         return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }
