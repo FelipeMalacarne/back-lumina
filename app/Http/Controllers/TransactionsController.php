@@ -38,7 +38,7 @@ class TransactionsController extends Controller
 
     public function update(Request $request, string $transaction)
     {
-        $transaction = $request->user()->transactions()->findOrFail($transaction);
+        $transaction = $request->user()->defaultProject->transactions()->findOrFail($transaction);
         $transaction->update($request->all());
 
         return response()->json($transaction, Response::HTTP_OK);
