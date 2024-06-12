@@ -12,6 +12,7 @@ class TransactionsController extends Controller
     public function index(Request $request)
     {
         $transactions = $request->user()->defaultProject->transactions()
+            ->with('account')
             ->when($request->query('type') === 'credit', function ($query) {
                 $query->where('amount', '>', 0);
             })
