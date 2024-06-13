@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\TransactionsController;
@@ -28,5 +29,13 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::group(['prefix' => 'transaction/import'], function () {
         Route::post('/ofx', [ImportController::class, 'importOfx']);
         Route::post('/csv', [ImportController::class, 'importCsv']);
+    });
+
+    Route::group(['prefix' => 'dashboard'], function () {
+        Route::get('/total-balance', [DashboardController::class, 'totalBalance']);
+        Route::get('/monthly-income', [DashboardController::class, 'monthlyIncome']);
+        Route::get('/monthly-expense', [DashboardController::class, 'monthlyExpense']);
+        Route::get('/last-transactions', [DashboardController::class, 'lastTransactions']);
+        Route::get('/in-out-year', [DashboardController::class, 'inOutOnYear']);
     });
 });

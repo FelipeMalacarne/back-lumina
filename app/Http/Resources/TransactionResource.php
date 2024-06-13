@@ -19,7 +19,7 @@ class TransactionResource extends JsonResource
             'amount' => $this->amount,
             'date_posted' => $this->date_posted->toDateString(),
             'memo' => $this->memo,
-            'account_id' => $this->account_id,
+            'account' => AccountResource::make($this->whenLoaded('account')),
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
         ];
