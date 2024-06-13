@@ -10,6 +10,7 @@ class DashboardController extends Controller
     public function totalBalance(Request $request)
     {
         $totalBalance = $request->user()->defaultProject->accounts()->sum('balance');
+
         return response()->json(['total_balance' => $totalBalance]);
     }
 
@@ -29,7 +30,7 @@ class DashboardController extends Controller
 
         return response()->json([
             'monthly_income' => $monthlyIncome,
-            'percentage_change' => $percentageChange
+            'percentage_change' => $percentageChange,
         ]);
     }
 
@@ -49,7 +50,7 @@ class DashboardController extends Controller
 
         return response()->json([
             'monthly_expense' => $monthlyExpense,
-            'percentage_change' => $percentageChange
+            'percentage_change' => $percentageChange,
         ]);
     }
 
@@ -97,7 +98,7 @@ class DashboardController extends Controller
                 'month' => $months[$i - 1],
                 'income' => $monthIncome,
                 'expense' => $monthExpense,
-                'profit' => $monthIncome - $monthExpense
+                'profit' => $monthIncome - $monthExpense,
             ];
         }
 
