@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TransactionResource;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -50,5 +51,24 @@ class DashboardController extends Controller
             'monthly_expense' => $monthlyExpense,
             'percentage_change' => $percentageChange
         ]);
+    }
+
+    public function lastTransactions(Request $request)
+    {
+        $lastTransactions = $request->user()->defaultProject->transactions()
+            ->with('account')
+            ->whereBetween('date_posted', [now()->startOfMonth(), now()->endOfMonth()])
+            ->orderBy('date_posted', 'desc')
+            ->limit(5)
+            ->get();
+
+        $monthTransactionsCount = $request->user()->defaultProject->transactions()
+            ->whereBetween('date_posted', [now()->startOfMonth(), now()->endOfMonth()])
+            ->count();
+
+        return [
+            'last_transactions' => TransactionResource::collection($lastTransactions),
+            'count' => $monthTransactionsCount,
+        ];
     }
 }
