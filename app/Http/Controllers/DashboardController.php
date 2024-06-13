@@ -39,7 +39,7 @@ class DashboardController extends Controller
 
         return response()->json([
             'monthly_income' => $monthlyIncome,
-            'percentage_change' => $percentageChange
+            'percentage_change' => $percentageChange,
         ]);
     }
 
@@ -59,7 +59,7 @@ class DashboardController extends Controller
 
         return response()->json([
             'monthly_expense' => $monthlyExpense,
-            'percentage_change' => $percentageChange
+            'percentage_change' => $percentageChange,
         ]);
     }
 
@@ -107,7 +107,7 @@ class DashboardController extends Controller
                 'month' => $months[$i - 1],
                 'income' => $monthIncome,
                 'expense' => $monthExpense,
-                'profit' => $monthIncome - $monthExpense
+                'profit' => $monthIncome - $monthExpense,
             ];
         }
 
