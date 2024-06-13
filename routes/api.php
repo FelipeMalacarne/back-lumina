@@ -35,5 +35,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         Route::get('/total-balance', [DashboardController::class, 'totalBalance']);
         Route::get('/monthly-income', [DashboardController::class, 'monthlyIncome']);
         Route::get('/monthly-expense', [DashboardController::class, 'monthlyExpense']);
+        Route::get('/last-transactions', [DashboardController::class, 'lastTransactions']);
+        Route::get('/in-out-year', [DashboardController::class, 'inOutOnYear']);
     });
 });

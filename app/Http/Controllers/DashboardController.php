@@ -71,4 +71,36 @@ class DashboardController extends Controller
             'count' => $monthTransactionsCount,
         ];
     }
+
+    public function inOutOnYear(Request $request)
+    {
+        $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        $data = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $monthIncome = $request->user()->defaultProject->transactions()
+                ->where('amount', '>', 0)
+                ->whereYear('date_posted', now()->year)
+                ->whereMonth('date_posted', $i)
+                ->sum('amount');
+
+            $monthExpense = abs($request->user()->defaultProject->transactions()
+                ->where('amount', '<', 0)
+                ->whereYear('date_posted', now()->year)
+                ->whereMonth('date_posted', $i)
+                ->sum('amount'));
+
+            $monthIncome = round($monthIncome / 100, 2);
+            $monthExpense = round($monthExpense / 100, 2);
+
+            $data[] = [
+                'month' => $months[$i - 1],
+                'income' => $monthIncome,
+                'expense' => $monthExpense,
+                'profit' => $monthIncome - $monthExpense
+            ];
+        }
+
+        return $data;
+    }
 }
