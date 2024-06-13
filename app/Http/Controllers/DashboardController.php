@@ -19,7 +19,7 @@ class DashboardController extends Controller
 
         return response()->json([
             'total_balance' => Number::currency($totalBalance / 100, 'BRL'),
-            'percentage_change' => $percentageChange . '%'
+            'percentage_change' => $percentageChange.'%',
         ]);
     }
 
