@@ -113,4 +113,40 @@ class DashboardController extends Controller
 
         return $data;
     }
+
+    public function weekBalance(Request $request)
+    {
+        $weekBalance = $request->user()->defaultProject->transactions()
+            ->whereBetween('date_posted', [now()->startOfWeek(), now()->endOfWeek()])
+            ->sum('amount');
+
+        $lastWeekBalance = $request->user()->defaultProject->transactions()
+            ->whereBetween('date_posted', [now()->subWeek()->startOfWeek(), now()->subWeek()->endOfWeek()])
+            ->sum('amount');
+
+        $percentageChange = round(($weekBalance - $lastWeekBalance) / $lastWeekBalance * 100, 2);
+
+        return [
+            'week_balance' => Number::currency($weekBalance / 100, 'BRL'),
+            'percentage_change' => $percentageChange > 0 ? '+' . $percentageChange . '%' : $percentageChange . '%',
+        ];
+    }
+
+    public function monthBalance(Request $request)
+    {
+        $monthBalance = $request->user()->defaultProject->transactions()
+            ->whereBetween('date_posted', [now()->startOfMonth(), now()->endOfMonth()])
+            ->sum('amount');
+
+        $lastMonthBalance = $request->user()->defaultProject->transactions()
+            ->whereBetween('date_posted', [now()->subMonth()->startOfMonth(), now()->subMonth()->endOfMonth()])
+            ->sum('amount');
+
+        $percentageChange = round(($monthBalance - $lastMonthBalance) / $lastMonthBalance * 100, 2);
+
+        return [
+            'month_balance' => Number::currency($monthBalance / 100, 'BRL'),
+            'percentage_change' => $percentageChange > 0 ? '+' . $percentageChange . '%' : $percentageChange . '%',
+        ];
+    }
 }
