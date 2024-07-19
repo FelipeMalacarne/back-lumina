@@ -7,6 +7,8 @@ use App\Enums\Role;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -58,14 +60,14 @@ class User extends Authenticatable implements MustVerifyEmail
         static::created(fn (User $user) => $user->createPersonalProject());
     }
 
-    public function projects()
+    public function projects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class)
             ->withPivot('role')
             ->withTimestamps();
     }
 
-    public function defaultProject()
+    public function defaultProject(): BelongsTo
     {
         return $this->belongsTo(Project::class);
     }

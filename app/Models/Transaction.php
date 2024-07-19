@@ -26,10 +26,26 @@ class Transaction extends Model
         'date_posted',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::created(function ($transaction) {
+            $transaction->account->increment('balance', $transaction->amount);
+        });
+
+        static::deleted(function ($transaction) {
+            $transaction->account->decrement('balance', $transaction->amount);
+        });
+
+        static::updated(function ($transaction) {
+            $transaction->account->update(['balance' => $transaction->account->transactions()->sum('amount')]);
+        });
+    }
+
     protected function casts(): array
     {
         return [
-            'date_posted' => 'immutable_datetime',
+            'date_posted' => 'datetime',
             'created_at' => 'immutable_datetime',
             'updated_at' => 'immutable_datetime',
         ];

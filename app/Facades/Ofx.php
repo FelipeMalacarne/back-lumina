@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static array balance()
  * @method static array statement()
  *
- * @see \App\Services\OfxParser
+ * @see App\Services\OfxParser
  */
 class Ofx extends Facade
 {
