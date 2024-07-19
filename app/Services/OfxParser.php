@@ -15,7 +15,9 @@ class OfxParser
 
         return $this;
     }
-
+    /**
+     * @return array<string,mixed>
+     */
     public function transactions(): array
     {
         $transactions = [];
@@ -32,7 +34,9 @@ class OfxParser
 
         return $transactions;
     }
-
+    /**
+     * @return array<string,mixed>
+     */
     public function balance(): array
     {
         $balance = $this->xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->LEDGERBAL;
@@ -42,7 +46,9 @@ class OfxParser
             'date' => Carbon::parse((string) $balance->DTASOF),
         ];
     }
-
+    /**
+     * @return array<string,mixed>
+     */
     public function account(): array
     {
         $account = $this->xml->BANKMSGSRSV1->STMTTRNRS->STMTRS->BANKACCTFROM;
@@ -67,7 +73,9 @@ class OfxParser
             'type' => (string) $account->ACCTTYPE,
         ];
     }
-
+    /**
+     * @return array<string,array>
+     */
     public function statement(): array
     {
         return [
